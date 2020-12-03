@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper]{article}
+
+\pdfminorversion=5
+\pdfobjcompresslevel=2
+
+\title{Modeling acid-base diodes using COMSOL with MATLAB}
+
+\begin{document}
+\maketitle
+
+\section{The model}
+
+\subsection{Acid-base diode}
+A gel or membrane connects an alkaline and an acidic reservoir
+with electric potential difference between them.
+The program computes in 1D the stationary concentration profiles of the ions,
+the potential profile in the gel/membrane and the current density.
+
+In this model the diffusion (boundary) layers of the gel are neglected.
+The gel/membrane usually contains fixed (not mobile) ions,
+which results small jump in the concentrations at liquid-gel boundary.
+The applied boundary conditions (Dirichlet) are corrected with this jump
+regarding the Donnan equilibrium.
+
+\subsection{Equations}
+Poisson--Nernst--Planck (PNP) equations.
+
+The PNP equations are selected in COMSOL using
+``Nernst--Planck equation without electroneutrality''
+in stationary mode and the ``Poisson-equation''.
+
+\subsection{Restrictions}
+The program can handle only one fixed cation and/or one fixed anion
+with charges $z=\pm1$. The charge of the mobile ions should be $|z|<3$.
+
+\section{Usage}
+
+\subsection{Start}
+\begin{enumerate}
+\item Start COMSOL with MATLAB
+	(run \verb|comsol matlab| in terminal emulator
+	as user \verb|matlab|;
+	see the help of COMSOL and MATLAB for possible flags).
+\item Change the current directory to
+	the location of the acid-base diode program.
+\item Run \verb|start_acidbase();| to load the database of
+	the existing computed models.
+\end{enumerate}
+
+\subsection{Select a model to calculate or to get the results}
+\verb|[current,state,fem]=diode_fcn(mode,par,opts);|
+
+Type \verb|help diode_fcn| for details.
+
+\subsection{Plot profiles}
+\verb|p_plot(fem,data)|
+
+Type \verb|help p_plot| for details.
+
+\subsection{Plot the current versus any parameter}
+\verb|[X,Y]=c_plot(mode,par,var,side)|
+
+Type \verb|help c_plot| for details.
+
+\subsection{Stop}
+Run \verb|stop_acidbase();| to save the new or changed models.
+Then it is safe to type \verb|exit| or close the MATLAB window.
+\end{document}
